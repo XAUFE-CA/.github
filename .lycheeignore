@@ -1,0 +1,18 @@
+# Apply patterns to full URLs; exclude only addresses automated checks cannot assess reliably.
+# 规则按完整 URL 匹配；仅排除自动检查无法可靠判断有效性的地址。
+
+# shields.io may rate-limit badge requests; verify rendering manually.
+# shields.io 可能限制徽章请求频率，显示是否正常需人工确认。
+^https://img\.shields\.io/
+
+# Workflow badges may fail before a branch has any runs, even with a valid URL.
+# 分支尚无运行记录时，即使 URL 有效，工作流徽章也可能报错。
+^https://github\.com/[^/]+/[^/]+/actions/workflows/[^/]+/badge\.svg
+
+# Workflow pages may return 404 before the first run on the default branch.
+# 工作流首次在默认分支运行前，相关页面可能返回 404。
+^https://github\.com/[^/]+/[^/]+/actions/workflows/[^/]+/?$
+
+# Repository search depends on sign-in state and may rate-limit anonymous requests.
+# 仓库搜索受登录状态影响，也可能对未登录请求限流。
+^https://github\.com/orgs/[^/]+/repositories\?

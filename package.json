@@ -1,0 +1,17 @@
+{
+	"name": "xca-github-defaults",
+	"version": "0.1.0",
+	"private": true,
+	"description": "XAUFE-CA 组织主页、贡献与协作指南，以及社区活动看板生成工具",
+	"license": "MIT",
+	"type": "module",
+	"engines": {
+		"node": ">=24"
+	},
+	"scripts": {
+		"test": "node --test scripts/update-community-pulse.test.mjs",
+		"pulse": "node scripts/update-community-pulse.mjs",
+		"pulse:dry": "node scripts/update-community-pulse.mjs --dry-run",
+		"pulse:placeholder": "node scripts/update-community-pulse.mjs --placeholder --dry-run"
+	}
+}

@@ -1,0 +1,4 @@
+# Use LF for text files to avoid line-ending-only diffs.
+# 文本文件统一使用 LF，避免仅因换行符差异产生改动。
+
+* text=auto eol=lf
