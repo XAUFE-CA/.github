@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="zh-CN" width="1024" height="342" viewBox="0 0 1024 342" role="img" aria-labelledby="title description">
 <title id="title">XCA 社区动态 · 浅色</title>
-<desc id="description">公开仓库 1 个，近 28 天可检索 Commit 1 次，近 28 天已合并 PR 0 个，待处理 Issue 0 个。同步时间：2026-10-24 13:52 UTC。</desc>
+<desc id="description">公开仓库 1 个，近 28 天可检索 Commit 1 次，近 28 天已合并 PR 0 个，待处理 Issue 0 个。同步时间：2026-10-24 16:04 UTC。</desc>
 <defs>
 <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1">
 <stop stop-color="#F4F9FC"/><stop offset="1" stop-color="#EAF3F8"/>
@@ -24,7 +24,7 @@
 <rect x="867" y="28" width="125" height="28" rx="14" fill="#DBEDF7"/>
 <circle cx="885" cy="42" r="3" fill="#74BAE5"/>
 <text x="898" y="47" fill="#405467" font-size="13" font-weight="650">公开活动快照</text>
-<text x="992" y="80" fill="#536A7B" font-size="12" font-weight="500" text-anchor="end">同步时间 2026-10-24 13:52 UTC</text>
+<text x="992" y="80" fill="#536A7B" font-size="12" font-weight="500" text-anchor="end">同步时间 2026-10-24 16:04 UTC</text>
 <rect x="32" y="104" width="228" height="112" rx="16" fill="#FFFFFF" fill-opacity="0.3"/>
 <text x="52" y="134" fill="#405467" font-size="16" font-weight="650">公开仓库</text>
 <text x="52" y="194" fill="#0F172A" font-size="48" font-weight="750" class="metric-value" letter-spacing="-1.92" style="font-variant-numeric:tabular-nums">1</text>
