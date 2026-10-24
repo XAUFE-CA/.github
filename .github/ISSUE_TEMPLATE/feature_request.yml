@@ -1,0 +1,65 @@
+name: Feature Request / 功能提案
+description: Suggest a new feature, improvement, or process change. / 提出新功能、改进建议或流程调整。
+title: "[Feature / 功能提案] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the background, goal, and proposed solution in the fields below. Search existing Issues before submitting to avoid duplicates. / 请在下方填写背景、目标与建议方案；提交前请先搜索已有 Issue，避免重复。
+        For changes with broad impact, use this Issue to discuss the scope and approach with maintainers before implementation. / 影响范围较大的改动，可在本 Issue 中与维护者讨论范围和方案后再实施，无需另开 Issue。
+
+  - type: textarea
+    id: background
+    attributes:
+      label: Background and problem / 背景与问题
+      description: Describe the current problem or inconvenience and why this change is needed. / 说明当前遇到的问题或不便，以及为什么需要这项改动。
+    validations:
+      required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal / 目标
+      description: Describe the intended outcome and how it can be verified. / 说明希望达成的效果，以及如何判断它已经实现。
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution / 建议方案
+      description: Describe the proposed implementation. Include alternatives if applicable. / 描述你设想的具体实现方式；如有替代方案也请说明。
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria / 验收条件
+      description: List verifiable completion criteria, such as checks to pass or outputs to produce. / 列出可验证的完成标准，例如需通过的检查或应产生的输出。
+    validations:
+      required: false
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope / 影响范围
+      description: Which areas are likely to be affected? / 这项改动大概会影响哪些内容？
+      options:
+        - Documentation and community health files / 文档与社区健康文件
+        - Community Pulse workflow or generator / Community Pulse 工作流或生成器
+        - CI and repository configuration / CI 与仓库配置
+        - Other (please explain in the proposed solution) / 其他（请在建议方案中说明）
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission checklist / 提交前确认
+      options:
+        - label: I searched existing Issues and confirmed this is not a duplicate suggestion. / 我已搜索现有 Issue，确认不是重复建议。
+          required: true
+        - label: I read COLLABORATION.md and understand that it is currently in trial status. / 我已阅读 COLLABORATION.md，并了解该规范目前处于试行阶段。
+          required: false

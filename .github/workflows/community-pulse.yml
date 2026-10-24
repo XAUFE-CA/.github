@@ -1,0 +1,47 @@
+name: Update community pulse
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/community-pulse.yml
+      - scripts/update-community-pulse.mjs
+      - scripts/update-community-pulse.test.mjs
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: xca-community-pulse
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Refresh public GitHub activity
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify snapshot generator
+        run: node --test scripts/update-community-pulse.test.mjs
+      - name: Fetch public activity and generate SVG
+        run: node scripts/update-community-pulse.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Commit refreshed snapshot if changed
+        run: |
+          git add profile/assets/community-pulse.svg profile/assets/community-pulse-dark.svg
+          if git diff --cached --quiet; then
+            echo "No snapshot changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(profile): refresh community pulse"
+          git push

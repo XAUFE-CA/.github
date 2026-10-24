@@ -1,0 +1,47 @@
+name: CI
+
+# Run on pushes to main and pull requests targeting main.
+# 在推送到 main 以及面向 main 的 Pull Request 上运行。
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Least privilege: CI only reads repository contents and does not write any snapshot files back.
+# 最小权限：CI 只读取仓库内容，不写回任何快照文件。
+permissions:
+  contents: read
+
+# New pushes to the same branch cancel earlier runs to avoid redundant resource usage.
+# 同一分支的新推送会取消旧运行，避免重复占用资源。
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }} verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['24', '26']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Smoke render light placeholder snapshot (stdout only)
+        run: node scripts/update-community-pulse.mjs --placeholder --dry-run > /dev/null
+
+      - name: Smoke render dark placeholder snapshot (stdout only)
+        run: node scripts/update-community-pulse.mjs --placeholder --dry-run --theme dark > /dev/null

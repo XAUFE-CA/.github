@@ -1,0 +1,72 @@
+name: Bug Report / 问题报告
+description: Report a reproducible issue; do not use this form for security vulnerabilities. / 报告可复现的问题；安全漏洞请勿使用本表单。
+title: "[Bug / 问题] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the reproducible problem in the fields below. Search existing Issues before submitting to avoid duplicates. / 请在下方说明可复现的问题；提交前请先搜索已有 Issue，避免重复。
+        Do not submit security vulnerabilities or sensitive information publicly. See [SECURITY.md](https://github.com/XAUFE-CA/.github/blob/main/SECURITY.md) for reporting instructions. / 若涉及**安全漏洞或敏感信息**，请勿在此公开提交；请先阅读 [SECURITY.md](https://github.com/XAUFE-CA/.github/blob/main/SECURITY.md)。
+
+  - type: input
+    id: affected-target
+    attributes:
+      label: Affected project and version / 受影响的项目与版本
+      description: Name the affected repository, branch, commit, or release. / 填写受影响的仓库、分支、提交或版本号。
+      placeholder: e.g. XAUFE-CA/.github, main branch, commit abc1234 / 例如：XAUFE-CA/.github，main 分支，提交 abc1234
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce / 复现步骤
+      description: List the fewest steps needed to reproduce the issue reliably. / 请用尽可能少的步骤说明如何稳定重现问题。
+      placeholder: |
+        1. Run ...
+        2. Open ...
+        3. Observe ...
+
+        1. 执行 ...
+        2. 打开 ...
+        3. 观察到 ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior / 预期行为
+      description: Describe what you expected to happen. / 描述你期望发生的情况。
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior / 实际行为
+      description: Describe what happened. Include errors, logs, or screenshots only after removing sensitive information. / 描述实际发生的情况；如有报错、日志或截图，请先移除敏感信息后再提供。
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 环境信息
+      description: List the operating system and relevant runtime (such as Node.js or Python) and tool versions. / 填写操作系统、Node.js/Python 等运行时版本及相关工具版本。
+      placeholder: e.g. Windows 11, Node.js 24.x / 例如：Windows 11，Node.js 24.x
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission checklist / 提交前确认
+      options:
+        - label: I searched existing Issues and confirmed this is not a duplicate. / 我已搜索现有 Issue，确认不是重复问题。
+          required: true
+        - label: I removed credentials, personal information, and other sensitive content. / 我已移除凭据、私人信息及其他敏感内容。
+          required: true
+        - label: This report does not disclose an unpatched security vulnerability. / 该问题不涉及未修复的安全漏洞。
+          required: true

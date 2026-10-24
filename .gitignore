@@ -1,0 +1,28 @@
+# Dependency directories and npm debug logs.
+# 依赖目录与调试日志
+node_modules/
+npm-debug.log*
+
+# Editor and OS-generated files; keep them out of version control.
+# 编辑器与系统自动生成的文件，避免误提交
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local environment variables and credentials.
+# 本地环境变量与凭据
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Temporary files and local preview artifacts.
+# 临时文件与本地预览
+*.log
+*.tmp
+*.local
+.community-pulse-*/

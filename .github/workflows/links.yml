@@ -1,0 +1,49 @@
+name: Link check
+
+# Links in documentation, templates, and configuration can affect contributors, so check pushes and PRs to main.
+# 文档、模板或配置里的链接都可能影响贡献者，因此在 push / PR 到 main 时检查。
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: links-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lychee:
+    name: lychee (Markdown links)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check links
+        id: lychee
+        # Pin the full commit SHA so moving version tags cannot change the action code.
+        # 固定完整提交 SHA，避免版本标签变动影响实际执行的 Action。
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          # Remap repository URLs to this checkout so unmerged additions and renames are checked.
+          # 将仓库链接映射到当前检出目录，以检查尚未合并的新增或改名文件。
+          # Tolerate 429 rate limits without claiming the link is valid; keep 403 as a failure.
+          # 429 仅按限流放行，不代表链接已验证；403 仍视为失败。
+          args: >-
+            --no-progress
+            --verbose
+            --accept 100..=103,200..=299,301,302,307,308,429
+            --max-retries 3
+            --retry-wait-time 2
+            --exclude-all-private
+            --remap 'https://github\.com/XAUFE-CA/\.github/blob/main/ file://${{ github.workspace }}/'
+            './**/*.md'
+          fail: true
+          jobSummary: true
+          token: ${{ github.token }}

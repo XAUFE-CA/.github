@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="zh-CN" width="1024" height="342" viewBox="0 0 1024 342" role="img" aria-labelledby="title description">
+<title id="title">XCA 社区动态 · 浅色</title>
+<desc id="description">公开仓库 1 个，近 28 天可检索 Commit 1 次，近 28 天已合并 PR 0 个，待处理 Issue 0 个。同步时间：2026-10-24 13:52 UTC。</desc>
+<defs>
+<linearGradient id="plate" x1="0" y1="0" x2="1" y2="1">
+<stop stop-color="#F4F9FC"/><stop offset="1" stop-color="#EAF3F8"/>
+</linearGradient>
+<radialGradient id="ice"><stop stop-color="#38BDF8" stop-opacity=".13"/><stop offset="1" stop-color="#38BDF8" stop-opacity="0"/></radialGradient>
+<radialGradient id="mint"><stop stop-color="#34C99A" stop-opacity=".08"/><stop offset="1" stop-color="#34C99A" stop-opacity="0"/></radialGradient>
+<radialGradient id="violet"><stop stop-color="#7C6EE6" stop-opacity=".07"/><stop offset="1" stop-color="#7C6EE6" stop-opacity="0"/></radialGradient>
+<mask id="panel-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="342"><rect x="0" y="0" width="1024" height="342" rx="24" fill="#FFFFFF"/></mask>
+</defs>
+<g mask="url(#panel-mask)">
+<rect x="0" y="0" width="1024" height="342" rx="0" fill="url(#plate)"/>
+<ellipse cx="920" cy="20" rx="440" ry="240" fill="url(#ice)"/>
+<ellipse cx="420" cy="342" rx="480" ry="190" fill="url(#mint)"/>
+<ellipse cx="40" cy="40" rx="240" ry="180" fill="url(#violet)"/>
+<rect x="0.5" y="0.5" width="1023" height="341" rx="24" fill="none" stroke="#0F172A" stroke-opacity="0.11"/>
+<g font-family="Inter Variable,Inter,Noto Sans SC Variable,Noto Sans SC,PingFang SC,Microsoft YaHei,Segoe UI,Arial,sans-serif">
+<rect x="32" y="28" width="40" height="40" rx="12" fill="#E1EFF9"/>
+<path d="M41 49 H46 L50 40 L55 56 L59 47 H64" fill="none" stroke="#74BAE5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="84" y="49" fill="#0F172A" font-size="20" font-weight="650">社区动态</text>
+<text x="84" y="74" fill="#536A7B" font-size="13" font-weight="500">XCA / 开源协作记录</text>
+<rect x="867" y="28" width="125" height="28" rx="14" fill="#DBEDF7"/>
+<circle cx="885" cy="42" r="3" fill="#74BAE5"/>
+<text x="898" y="47" fill="#405467" font-size="13" font-weight="650">公开活动快照</text>
+<text x="992" y="80" fill="#536A7B" font-size="12" font-weight="500" text-anchor="end">同步时间 2026-10-24 13:52 UTC</text>
+<rect x="32" y="104" width="228" height="112" rx="16" fill="#FFFFFF" fill-opacity="0.3"/>
+<text x="52" y="134" fill="#405467" font-size="16" font-weight="650">公开仓库</text>
+<text x="52" y="194" fill="#0F172A" font-size="48" font-weight="750" class="metric-value" letter-spacing="-1.92" style="font-variant-numeric:tabular-nums">1</text>
+<rect x="276" y="104" width="228" height="112" rx="16" fill="#FFFFFF" fill-opacity="0.3"/>
+<text x="296" y="134" fill="#405467" font-size="16" font-weight="650">近 28 天 Commit</text>
+<text x="296" y="194" fill="#0F172A" font-size="48" font-weight="750" class="metric-value" letter-spacing="-1.92" style="font-variant-numeric:tabular-nums">1</text>
+<rect x="520" y="104" width="228" height="112" rx="16" fill="#FFFFFF" fill-opacity="0.3"/>
+<text x="540" y="134" fill="#405467" font-size="16" font-weight="650">近 28 天已合并 PR</text>
+<text x="540" y="194" fill="#0F172A" font-size="48" font-weight="750" class="metric-value" letter-spacing="-1.92" style="font-variant-numeric:tabular-nums">0</text>
+<rect x="764" y="104" width="228" height="112" rx="16" fill="#FFFFFF" fill-opacity="0.3"/>
+<text x="784" y="134" fill="#405467" font-size="16" font-weight="650">待处理 Issue</text>
+<text x="784" y="194" fill="#0F172A" font-size="48" font-weight="750" class="metric-value" letter-spacing="-1.92" style="font-variant-numeric:tabular-nums">0</text>
+<rect x="32" y="232" width="960" height="78" rx="16" fill="#FFFFFF" fill-opacity="0.3"/>
+<text x="48" y="254" fill="#0F172A" font-size="14" font-weight="650">逐日活动</text>
+<text x="132" y="253" fill="#536A7B" font-size="12" font-weight="500">少</text>
+<rect x="154" y="245" width="8" height="8" rx="2.5" fill="#D8E7EF" class="legend-cell" data-level="0"/>
+<rect x="166" y="245" width="8" height="8" rx="2.5" fill="#D1FAE5" class="legend-cell" data-level="1"/>
+<rect x="178" y="245" width="8" height="8" rx="2.5" fill="#6EE7B7" class="legend-cell" data-level="2"/>
+<rect x="190" y="245" width="8" height="8" rx="2.5" fill="#34C99A" class="legend-cell" data-level="3"/>
+<rect x="202" y="245" width="8" height="8" rx="2.5" fill="#087F66" class="legend-cell" data-level="4"/>
+<text x="220" y="253" fill="#536A7B" font-size="12" font-weight="500">多</text>
+<text x="976" y="254" fill="#536A7B" font-size="12" font-weight="500" text-anchor="end">2026-09-27 — 2026-10-24 · UTC</text>
+<rect x="48" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="1"/>
+<rect x="81" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="2"/>
+<rect x="114" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="3"/>
+<rect x="147" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="4"/>
+<rect x="180" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="5"/>
+<rect x="213" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="6"/>
+<rect x="246" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="7"/>
+<rect x="279" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="8"/>
+<rect x="312" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="9"/>
+<rect x="345" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="10"/>
+<rect x="378" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="11"/>
+<rect x="411" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="12"/>
+<rect x="444" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="13"/>
+<rect x="477" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="14"/>
+<rect x="510" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="15"/>
+<rect x="543" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="16"/>
+<rect x="576" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="17"/>
+<rect x="609" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="18"/>
+<rect x="642" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="19"/>
+<rect x="675" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="20"/>
+<rect x="708" y="270" width="25" height="24" rx="6" fill="#087F66" class="daily-cell" data-day="21"/>
+<rect x="741" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="22"/>
+<rect x="774" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="23"/>
+<rect x="807" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="24"/>
+<rect x="840" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="25"/>
+<rect x="873" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="26"/>
+<rect x="906" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="27"/>
+<rect x="939" y="270" width="25" height="24" rx="6" fill="#D8E7EF" class="daily-cell" data-day="28"/>
+<text x="32" y="330" fill="#536A7B" font-size="12" font-weight="400">GitHub 公开检索数据 · 不含非公开活动 · 通常每 6 小时刷新</text>
+</g></g></svg>

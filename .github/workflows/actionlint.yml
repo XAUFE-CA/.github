@@ -1,0 +1,57 @@
+name: Lint workflows
+
+# Run only when files under .github/ change, so documentation edits elsewhere do not trigger this check.
+# 仅在 .github/ 下有文件变更时运行，避免其他目录的文档修改触发检查。
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/**'
+
+# Least privilege: this workflow only reads repository contents and does not write any files back.
+# 最小权限：本工作流只读仓库内容，不写回任何文件。
+permissions:
+  contents: read
+
+concurrency:
+  group: actionlint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  actionlint:
+    name: actionlint (workflow syntax)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Pin and verify the official binary instead of trusting a wrapper action or requiring Docker.
+      # 固定并校验官方二进制，避免额外信任封装 Action，也不依赖 Docker。
+      # Dependabot does not track this download; update the version and release checksum together.
+      # Dependabot 不跟踪此下载版本；升级时同步更新版本号和发布页提供的校验值。
+      - name: Install actionlint (pinned, checksum-verified)
+        env:
+          ACTIONLINT_VERSION: '1.7.12'
+          # Source: https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_checksums.txt
+          # 来自 https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_checksums.txt
+          ACTIONLINT_SHA256_LINUX_AMD64: '8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8'
+        run: |
+          set -euo pipefail
+          archive="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          base="https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}"
+          curl -fsSLo "${archive}" "${base}/${archive}"
+          echo "${ACTIONLINT_SHA256_LINUX_AMD64}  ${archive}" | sha256sum -c -
+          tar -xzf "${archive}" actionlint
+          install -m 0755 actionlint "${RUNNER_TEMP}/actionlint"
+
+      - name: Check workflow syntax and expressions
+        run: |
+          set -uo pipefail
+          # Disable optional ShellCheck/pyflakes checks because their runner versions are not pinned.
+          # 运行环境未固定这些工具的版本，因此禁用可选的 ShellCheck/pyflakes 检查。
+          "${RUNNER_TEMP}/actionlint" -color -shellcheck='' -pyflakes=''
