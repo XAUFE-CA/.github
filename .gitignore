@@ -26,3 +26,7 @@ desktop.ini
 *.tmp
 *.local
 .community-pulse-*/
+
+# Generated Pages deployment output; never commit activity snapshots.
+# 生成的 Pages 部署产物，不将活动快照提交到仓库。
+_site/

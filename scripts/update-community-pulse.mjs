@@ -7,14 +7,6 @@ import { fileURLToPath } from "node:url";
 
 export const ORG = "XAUFE-CA";
 export const DAYS = 28;
-export const OUTPUT = resolve(
-	dirname(fileURLToPath(import.meta.url)),
-	"../profile/assets/community-pulse.svg",
-);
-export const OUTPUT_DARK = resolve(
-	dirname(fileURLToPath(import.meta.url)),
-	"../profile/assets/community-pulse-dark.svg",
-);
 const API = "https://api.github.com";
 
 // Requests time out after 20 seconds by default. Network errors and HTTP
@@ -25,7 +17,7 @@ const RETRY_STATUS = new Set([502, 503, 504]);
 const MAX_RETRIES = 1;
 const RETRY_BACKOFF_MS = 400;
 const USAGE =
-	"Usage: node scripts/update-community-pulse.mjs [--placeholder] [--dry-run [--theme light|dark]]";
+	"Usage: node scripts/update-community-pulse.mjs [--output-dir <path>] [--placeholder] [--dry-run [--theme light|dark]]";
 
 function toDate(value) {
 	if (value instanceof Date) return value;
@@ -632,6 +624,7 @@ function parseArgs(argv) {
 		dryRun: false,
 		theme: "light",
 		themeGiven: false,
+		outputDir: "_site",
 	};
 	for (let index = 0; index < argv.length; index++) {
 		const arg = argv[index];
@@ -646,6 +639,13 @@ function parseArgs(argv) {
 		} else if (arg.startsWith("--theme=")) {
 			options.themeGiven = true;
 			options.theme = parseTheme(arg.slice("--theme=".length));
+		} else if (arg === "--output-dir" || arg.startsWith("--output-dir=")) {
+			const value = arg === "--output-dir"
+				? argv[++index]
+				: arg.slice("--output-dir=".length);
+			if (!value || value.startsWith("--"))
+				throw Error(`${USAGE}\n--output-dir expects a directory path`);
+			options.outputDir = value;
 		} else {
 			throw Error(`${USAGE}\nUnknown argument: ${arg}`);
 		}
@@ -667,8 +667,8 @@ async function main() {
 		return;
 	}
 	const variants = [
-		[OUTPUT, renderPanel(data, "light")],
-		[OUTPUT_DARK, renderPanel(data, "dark")],
+		[resolve(options.outputDir, "community-pulse.svg"), renderPanel(data, "light")],
+		[resolve(options.outputDir, "community-pulse-dark.svg"), renderPanel(data, "dark")],
 	];
 	const changed = await writePanels(variants);
 	console.log(

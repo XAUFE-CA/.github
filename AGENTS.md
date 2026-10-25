@@ -38,23 +38,30 @@
 - 未经任务明确授权，不得提交、推送、打标签、切换分支、改写历史或丢弃工作区改动，
   也不得改动用户的暂存区或删除未跟踪文件。对某一操作的授权不自动扩展到其他操作。
 
-## Community Pulse 快照
+## Community Pulse 构建与发布
 
-- `profile/assets/community-pulse.svg` 与 `profile/assets/community-pulse-dark.svg`
-  只能由 `scripts/update-community-pulse.mjs` 的正式刷新流程生成；
-  不得手工修改，也不得用占位或伪造数据覆盖真实快照。
+- Community Pulse 由 `scripts/update-community-pulse.mjs` 生成，默认输出到当前工作目录下
+  被 Git 忽略的 `_site/`；可用 `--output-dir <path>` 指定目录。生成的
+  `community-pulse.svg` 与 `community-pulse-dark.svg` 不纳入版本控制，
+  不得手工修改，也不得将占位或伪造数据作为正式发布产物。
 - 默认采用离线预览：`npm run pulse:placeholder`，或显式使用
   `--placeholder --dry-run`。单独使用 `--placeholder` 仍会写入文件，不得用于本地预览。
 - `--dry-run` 只保证不写文件，不保证离线；`npm run pulse:dry` 仍会访问 GitHub API。
   只有任务需要获取真实数据时才运行联网预览；仅需检查样式或参数时使用离线预览。
-- 任务明确要求更新实际 SVG 资源时，才执行联网的 `npm run pulse`；
-  仅修改生成器或进行预览不视为写入快照的授权。正式刷新会同时更新浅色、深色快照，
-  不代表已提交或推送；在 PR 中（尚无 PR 时在交付说明中）记录刷新时间、数据来源和统计方法。
-- 预览与测试前后直接比较两个快照的内容或哈希，确认文件未被改写；
-  不得仅凭 `git status --short` 判断，已有脏文件或未跟踪文件被改写时，其状态可能不变。
+- 任务明确要求构建真实 SVG 时，才执行联网的 `npm run pulse`；仅修改生成器或进行预览
+  不视为真实构建授权。该命令只更新本地 `_site/` 中的两主题文件，不自动提交或部署。
+  在 PR 中（尚无 PR 时在交付说明中）记录真实构建的时间、公开数据来源和统计方法。
+- 预览与测试前后确认所有已跟踪文件内容未被改写；已有脏文件应以操作前内容为基准，
+  不得仅凭 `git status --short` 判断，因为脏文件被改写时状态可能不变。
+  不再以已移除的 SVG 快照哈希作为保护对象；自定义输出目录也不得覆盖已跟踪文件。
+- 正式发布由工作流生成真实公开数据卡片，组装 `index.html` 后仅上传 `_site/` 的两张 SVG
+  与入口页作为 Pages artifact，部署到 <https://xaufe-ca.github.io/.github/>。
+  构建只需 `contents: read`，部署使用 `pages: write` 与 `id-token: write`；
+  不授予内容写权限，不自动提交生成物，遵守分支和部署环境保护。
 - 修改卡片样式时，检查浅色、深色的实际渲染，包括文字边界、图例比例、对比度与圆角透明度，
-  具体方法见维护说明。若已获授权刷新资源，还须检查刷新后的实际文件，不能只验证占位预览。
-  未刷新或刷新失败时，明确说明实际快照仍未更新，不得将生成器修复等同于展示资源已更新。
+  具体方法见维护说明。若已获授权真实构建，还须检查真实输出，不能只验证占位预览。
+  本地构建不等于发布；部署前失败保留上次成功站点，定时调度与 Camo 缓存可能延迟展示更新。
+  未部署或部署失败时须明确说明，不得将生成器修复或本地输出等同于线上更新。
 
 ## 验证命令
 
@@ -68,7 +75,7 @@ npm run pulse:placeholder        # Preview light SVG offline. | 离线预览浅�
 node scripts/update-community-pulse.mjs --placeholder --dry-run --theme dark # Preview dark SVG offline. | 离线预览深色 SVG。
 ```
 
-- 只修改 Markdown 时，检查文档渲染、相对链接、锚点与规范引用，不因此刷新快照。
+- 只修改 Markdown 时，检查文档渲染、相对链接、锚点与规范引用，不因此构建或发布真实卡片。
   CI 的链接检查由 `.github/workflows/links.yml` 执行。
 - 修改工作流或 YAML 模板时，检查 YAML 语法及其对应平台规则；普通 YAML 解析不能替代
   GitHub Actions 或 Issue Forms 校验。修改工作流时，CI 还会通过

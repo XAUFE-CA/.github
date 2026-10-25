@@ -7,7 +7,8 @@
 
 - 生成器：[`scripts/update-community-pulse.mjs`](../scripts/update-community-pulse.mjs)
 - 工作流：[`community-pulse.yml`](../.github/workflows/community-pulse.yml)
-- 输出：`profile/assets/community-pulse.svg`（浅色）、`profile/assets/community-pulse-dark.svg`（深色）
+- 本地输出：`_site/community-pulse.svg`（浅色）、`_site/community-pulse-dark.svg`（深色）；`_site/` 被 Git 忽略，不提交生成的 SVG。
+- 发布地址：<https://xaufe-ca.github.io/.github/>；两主题 SVG 由 GitHub Pages 托管。
 - 展示位置：[`profile/README.md`](../profile/README.md)
 - 图内文案统一使用中文，Commit、PR、Issue 术语与 README 保持一致；浅色与深色版本使用相同文案。
 
@@ -36,8 +37,8 @@
 - 保留 1024 × 342 画布、原有指标与 UTC 统计口径；逐日活动图例使用
   8 × 8 的 1:1 正方形色块，展示零活动和四档活动色阶。浅色为薄荷绿、
   深色为蓝色，与每日单元格使用同一色阶。
-- 样式修改在下一次正式刷新时写入浅色、深色快照。本地预览使用下方的
-  `--placeholder --dry-run`；不要手工修改 `profile/assets/community-pulse*.svg`。
+- 样式修改在下一次成功部署后更新线上浅色、深色卡片。本地预览使用下方的
+  `--placeholder --dry-run`；不要手工修改或提交生成的 SVG。
 
 ## 数据来源与统计方法
 
@@ -60,16 +61,23 @@ GitHub 搜索索引更新可能存在延迟。
 
 - [工作流](../.github/workflows/community-pulse.yml) 计划每 6 小时运行一次，并支持在 GitHub Actions 页面手动触发。
 - 首次合并 / 推送工作流与生成器到默认分支后，也会启动更新。
-- 使用仓库自带的 `GITHUB_TOKEN`，无需额外配置个人访问令牌（PAT）；需要允许 GitHub Actions 运行，并授予 `contents: write` 权限，以便将生成的看板文件保存到仓库。
+- 使用仓库自带的 `GITHUB_TOKEN`，无需额外配置个人访问令牌（PAT）。构建任务使用
+  `contents: read`；部署任务使用 `pages: write` 与 `id-token: write`，不授予 `contents: write`。
+- Pages 使用 GitHub Actions 部署模式。工作流验证通过后获取真实公开数据，生成两主题 SVG，
+  再组装 `index.html`；通过 Actions Pages artifact 仅上传 `_site/` 中这三个文件并部署，
+  不提交生成物、不自动创建 Commit，也不将仓库其余内容上传到 Pages。
 - [生成脚本](../scripts/update-community-pulse.mjs) 在成功取得所需 API 响应并完成两主题渲染后，
-  先读取两个现有快照，将有变化的新内容与旧内容备份暂存到输出目录内的
-  `.community-pulse-*` 临时目录，再替换目标文件；内容未变化时不写入。
-- API 请求、数据验证或渲染失败时，不会开始替换；测试失败时工作流不会执行刷新。
-  替换失败会恢复此前已替换的文件，或移除本轮新建的目标文件，然后报错退出，工作流不会提交。
-- 若恢复本身也失败，会保留临时目录中的旧内容备份，并在错误中给出恢复目录位置；
-  不得直接提交不完整的快照。此机制处理进程内可捕获的失败，不保证两文件在强杀进程、
-  掉电等情况下具备跨文件原子性；异常终止后应检查实际快照与遗留恢复目录。
-- GitHub Actions 定时触发可能延迟；公开仓库连续 60 天没有活动时，定时工作流还可能自动停用，需要维护者重新启用。默认分支保护也可能阻止自动提交更新，应根据仓库规则调整权限与提交更新的方式，不应绕过既有保护要求。
+  将有变化的新内容与旧内容备份暂存到输出目录内的 `.community-pulse-*` 临时目录，
+  再替换目标文件；内容未变化时不写入。替换失败时恢复此前文件或移除本轮新建文件；
+  若恢复失败，保留旧内容备份并报告恢复目录，不得发布不完整产物。
+  此机制不保证强杀进程或掉电时的跨文件原子性，异常终止后应检查输出与恢复目录。
+- 测试、API 请求、数据验证、渲染或产物准备失败时不会进入部署，之前成功发布的站点保持不变。
+  本地构建成功不等于已经发布；必须区分本地输出、Actions 构建产物与成功的 Pages 部署。
+- 定时触发可能延迟，公开仓库连续 60 天没有活动时还可能自动停用，因此不承诺每 6 小时
+  必定更新。维护者应按需重新启用工作流，并遵守既有分支保护及 Pages 环境的审批、部署限制，
+  不得为刷新看板绕过保护。
+- GitHub README 图片可能经 Camo 代理缓存；Pages 部署成功后，主页图片仍可能稍后才更新，
+  不应把旧缓存直接判断为部署失败。
 
 ## 数据来源的已知限制
 
@@ -94,17 +102,22 @@ GitHub 搜索索引更新可能存在延迟。
 npm test                  # Run all generator unit tests. | 运行生成器的全部单元测试。
 npm run pulse:placeholder  # Print a placeholder SVG without network access. | 输出占位 SVG，不访问网络。
 npm run pulse:dry          # Fetch GitHub API data; print the light-theme SVG to stdout. | 从 GitHub API 获取数据，仅将浅色 SVG 输出到终端。
-npm run pulse             # Fetch GitHub API data; write both SVG themes to profile/assets/. | 从 GitHub API 获取数据，将浅色和深色 SVG 写入 profile/assets/。
+npm run pulse             # Fetch GitHub API data; write both SVG themes to ignored _site/. | 从 GitHub API 获取数据，将浅色和深色 SVG 写入被忽略的 _site/。
 ```
 
-也可以直接调用脚本：`node scripts/update-community-pulse.mjs [--placeholder] [--dry-run [--theme light|dark]]`。
+也可以直接调用脚本：`node scripts/update-community-pulse.mjs [--output-dir <path>] [--placeholder] [--dry-run [--theme light|dark]]`。
 
 - `--dry-run` 只输出 SVG，不修改文件；`--theme` 仅在使用 `--dry-run` 时选择输出主题，正常更新会同时保存浅色和深色两个版本。
+- `--output-dir <path>` 指定输出目录；默认 `_site/` 相对于当前工作目录解析，而不是脚本所在目录。
+  正常刷新生成 `community-pulse.svg` 与 `community-pulse-dark.svg`；自定义输出目录也不得纳入版本控制。
 - `--placeholder` 使用占位数据，不访问网络，但不禁止写文件；本地预览必须同时使用 `--dry-run`。
 - 未认证的请求可能超过 Search API 的次数限制，可先设置 `GITHUB_TOKEN` 环境变量（只需读取公开数据，无需额外权限）。
 - 单次请求及其响应体读取共用 20 秒超时；遇到 502/503/504、网络断流或超时，
   会等待 400 毫秒后重试一次，仍失败则报错。JSON 语法错误及 403/429 请求受限错误不重试。
-- 未指定 `--placeholder` 和 `--dry-run` 时，脚本会访问 GitHub API 并更新本地 SVG；内容未变化时不会写文件。提交前请检查图中内容是否正确，以及数据来源和统计方法是否符合说明。
+- 未指定 `--placeholder` 和 `--dry-run` 时，脚本会访问 GitHub API 并更新本地输出目录中的 SVG；
+  内容未变化时不会写文件。`npm run pulse` 只写入未跟踪的 `_site/`，不会提交或部署。
+  发布前须核对图中真实数据、数据来源与统计方法，不得将占位预览作为正式 Pages 产物。
+  本地输出仅供检查；线上更新以成功的 Pages 部署为准。
 - 修改圆角或透明效果时，需在浏览器中将浅色、深色 SVG 绘制到透明 Canvas，
   以 1×、2× 分辨率比较四角 24px 区域的镜像对应像素 alpha，允许至多 1/255
   的舍入差异；角外应全透明，面板内部应不透明。此像素检查不由 Node 单元测试覆盖。

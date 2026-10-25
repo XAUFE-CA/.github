@@ -1,4 +1,4 @@
-name: Update community pulse
+name: Deploy community pulse
 
 on:
   push:
@@ -12,15 +12,15 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: xca-community-pulse
   cancel-in-progress: false
 
 jobs:
-  refresh:
-    name: Refresh public GitHub activity
+  build:
+    name: Build public GitHub activity
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -34,14 +34,38 @@ jobs:
         run: node scripts/update-community-pulse.mjs
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Commit refreshed snapshot if changed
+      - name: Assemble Pages entry point
         run: |
-          git add profile/assets/community-pulse.svg profile/assets/community-pulse-dark.svg
-          if git diff --cached --quiet; then
-            echo "No snapshot changes."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(profile): refresh community pulse"
-          git push
+          cat > _site/index.html <<'HTML'
+          <!doctype html>
+          <html lang="zh-CN">
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>XCA Community Pulse</title>
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="community-pulse-dark.svg">
+            <img src="community-pulse.svg" alt="XCA 公开 GitHub 活动统计" style="width:100%;max-width:1024px">
+          </picture>
+          </html>
+          HTML
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+          retention-days: 1
+
+  deploy:
+    name: Deploy activity cards to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -40,9 +40,9 @@ XCA（西安财经大学计算机学社）致力于建设一个**真诚、包容
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/community-pulse-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/community-pulse.svg">
-  <img src="./assets/community-pulse.svg" alt="XCA 公开 GitHub 活动统计：公开仓库、近 28 天 Commit、已合并 PR、待处理 Issue 与逐日活动。图中注明同步时间，仅包含可检索的公开数据。" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://xaufe-ca.github.io/.github/community-pulse-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://xaufe-ca.github.io/.github/community-pulse.svg">
+  <img src="https://xaufe-ca.github.io/.github/community-pulse.svg" alt="XCA 公开 GitHub 活动统计：公开仓库、近 28 天 Commit、已合并 PR、待处理 Issue 与逐日活动。图中注明同步时间，仅包含可检索的公开数据。" width="100%">
 </picture>
 
 </div>

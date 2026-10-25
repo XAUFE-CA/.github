@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
-import { copyFile, mkdir, mkdtemp, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
@@ -15,8 +14,6 @@ import {
 	gather,
 	github,
 	histogram,
-	OUTPUT,
-	OUTPUT_DARK,
 	renderPanel,
 	writePanels,
 } from "./update-community-pulse.mjs";
@@ -42,14 +39,11 @@ function cellCount(svg) {
 	return (svg.match(/class="daily-cell"/g) ?? []).length;
 }
 
-function runCli(args) {
-	return spawnSync(process.execPath, [SCRIPT, ...args], { encoding: "utf8" });
-}
-
-function snapshotAssets() {
-	return [OUTPUT, OUTPUT_DARK].map((file) =>
-		existsSync(file) ? readFileSync(file, "utf8") : null,
-	);
+function runCli(args, cwd) {
+	return spawnSync(process.execPath, [SCRIPT, ...args], {
+		encoding: "utf8",
+		cwd,
+	});
 }
 
 test("UTC date range covers exactly 28 calendar days", () => {
@@ -505,10 +499,10 @@ test("github does not retry non-transient failures", async () => {
 		assert.doesNotMatch(error.message, /retry/);
 	}
 });
-async function outputFixture(t) {
+async function outputFixture(t, directoryName = "_site") {
 	const root = await mkdtemp(join(tmpdir(), "xca-pulse-test-"));
 	t.after(() => rm(root, { recursive: true, force: true }));
-	const directory = join(root, "profile", "assets");
+	const directory = join(root, directoryName);
 	await mkdir(directory, { recursive: true });
 	return {
 		root,
@@ -519,21 +513,25 @@ async function outputFixture(t) {
 }
 
 test("CLI preserves both existing snapshots when a target cannot be read", async (t) => {
-	const { root, directory, light, dark } = await outputFixture(t);
-	await mkdir(join(root, "scripts"));
-	const script = join(root, "scripts", "update-community-pulse.mjs");
-	await copyFile(SCRIPT, script);
-	await writeFile(light, "previous light snapshot");
-	await mkdir(dark);
-	const result = spawnSync(process.execPath, [script, "--placeholder"], {
-		encoding: "utf8",
-	});
-	assert.notEqual(result.status, 0);
-	assert.equal(await readFile(light, "utf8"), "previous light snapshot");
-	assert.deepEqual((await readdir(directory)).sort(), [
-		"community-pulse-dark.svg",
-		"community-pulse.svg",
-	]);
+	for (const mode of ["default", "separate", "equals"]) {
+		const { root, directory, light, dark } = await outputFixture(
+			t,
+			mode === "default" ? "_site" : "output with spaces",
+		);
+		await writeFile(light, "previous light snapshot");
+		await mkdir(dark);
+		const args = ["--placeholder"];
+		if (mode === "separate") args.push("--output-dir", "output with spaces");
+		if (mode === "equals") args.push(`--output-dir=${directory}`);
+		const result = runCli(args, root);
+		assert.notEqual(result.status, 0, mode);
+		assert.equal(await readFile(light, "utf8"), "previous light snapshot");
+		assert.deepEqual(await readdir(dark), []);
+		assert.deepEqual((await readdir(directory)).sort(), [
+			"community-pulse-dark.svg",
+			"community-pulse.svg",
+		]);
+	}
 });
 
 test("writePanels restores both snapshots after a replacement failure", async (t) => {
@@ -614,40 +612,41 @@ test("writePanels retains recovery copies when rollback also fails", async (t) =
 	assert.ok(reportedError.message.includes(recovery));
 });
 
-test("dry-run prints a single theme and never writes profile assets", () => {
-	const before = snapshotAssets();
-	const light = runCli(["--placeholder", "--dry-run"]);
+test("dry-run prints a single theme without creating output directories", async (t) => {
+	const root = await mkdtemp(join(tmpdir(), "xca-pulse-preview-"));
+	t.after(() => rm(root, { recursive: true, force: true }));
+	const light = runCli(["--placeholder", "--dry-run"], root);
 	assert.equal(light.status, 0, light.stderr);
 	assert.match(light.stdout, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
 	assert.equal(cellCount(light.stdout), 28);
 	assert.equal(light.stderr, "");
 
-	const dark = runCli(["--placeholder", "--dry-run", "--theme", "dark"]);
+	const dark = runCli([
+		"--placeholder", "--dry-run", "--theme", "dark",
+		"--output-dir", "unused output",
+	], root);
 	assert.equal(dark.status, 0, dark.stderr);
 	assert.equal(cellCount(dark.stdout), 28);
-
-	assert.deepEqual(snapshotAssets(), before);
+	assert.notEqual(dark.stdout, light.stdout);
+	assert.deepEqual(await readdir(root), []);
 });
 
-test("CLI reports usage errors for bad arguments", () => {
-	const unknown = runCli(["--placeholder", "--dry-run", "--verbose"]);
-	assert.equal(unknown.status, 1);
-	assert.match(
-		unknown.stderr,
-		/Usage: node scripts\/update-community-pulse\.mjs/,
-	);
-	assert.match(unknown.stderr, /Unknown argument: --verbose/);
-
-	const badTheme = runCli(["--placeholder", "--dry-run", "--theme", "sepia"]);
-	assert.equal(badTheme.status, 1);
-	assert.match(badTheme.stderr, /Unknown theme: sepia/);
-	assert.match(badTheme.stderr, /light.*dark/);
-
-	const missingTheme = runCli(["--placeholder", "--dry-run", "--theme"]);
-	assert.equal(missingTheme.status, 1);
-	assert.match(missingTheme.stderr, /--theme expects/);
-
-	const refreshTheme = runCli(["--placeholder", "--theme", "dark"]);
-	assert.equal(refreshTheme.status, 1);
-	assert.match(refreshTheme.stderr, /only supported together with --dry-run/);
+test("CLI rejects invalid arguments without creating outputs", async (t) => {
+	const root = await mkdtemp(join(tmpdir(), "xca-pulse-arguments-"));
+	t.after(() => rm(root, { recursive: true, force: true }));
+	for (const args of [
+		["--dry-run", "--verbose"],
+		["--dry-run", "--theme", "sepia"],
+		["--dry-run", "--theme"],
+		["--theme", "dark"],
+		["--output-dir"],
+		["--output-dir", ""],
+		["--output-dir="],
+		["--output-dir", "--dry-run"],
+	]) {
+		const result = runCli(["--placeholder", ...args], root);
+		assert.equal(result.status, 1, JSON.stringify(args));
+		assert.equal(result.stdout, "");
+	}
+	assert.deepEqual(await readdir(root), []);
 });

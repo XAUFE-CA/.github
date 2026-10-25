@@ -73,5 +73,5 @@ For disclosure requirements and exemptions, see [AI-assisted collaboration guide
 - [ ] I have confirmed that the change scope matches this task and contains no unrelated files. / 变更范围与本次目标一致，未包含无关文件。
 - [ ] I have accurately reported the verification performed and have not fabricated test or review evidence. / 已如实填写验证方式，未伪造测试或审查证据。
 - [ ] I have not included credentials, private keys, personal information, or other sensitive data. / 未提交凭据、私钥、个人隐私数据或其他敏感内容。
-- [ ] If `profile/assets/` snapshots are involved, I confirmed they are genuine generator output and were not edited manually. / 涉及 `profile/assets/` 快照时，已确认其为生成器真实输出而非手工改写。
+- [ ] If Community Pulse Pages artifacts are involved, I confirmed that published SVGs use genuine public data, not manually edited or placeholder output; generated files are not committed, and local builds are distinguished from successful Pages deployments. / 涉及 Community Pulse Pages 产物时，已确认发布的 SVG 使用真实公开数据而非手工修改或占位输出；未提交生成物，并区分本地构建与成功的 Pages 部署。
 - [ ] If I changed wording in community health files (`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`), I explained why. / 修改社区健康文件（`CONTRIBUTING.md`、`CODE_OF_CONDUCT.md`、`SECURITY.md`）措辞时，已说明必要性。
