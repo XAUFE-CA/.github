@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Pin and verify the official binary instead of trusting a wrapper action or requiring Docker.
       # 固定并校验官方二进制，避免额外信任封装 Action，也不依赖 Docker。
