@@ -69,7 +69,6 @@ XCA（西安财经大学计算机学社）致力于建设一个**真诚、包容
 | [项目开发与协作规范](https://github.com/XAUFE-CA/.github/blob/main/COLLABORATION.md) | AI 使用、Git 提交、代码审查、Issue 与 PR 协作要求。 |
 | [社区行为准则](https://github.com/XAUFE-CA/.github/blob/main/CODE_OF_CONDUCT.md) | 社区交流中的行为要求，以及问题反馈与处理方式。 |
 | [安全说明](https://github.com/XAUFE-CA/.github/blob/main/SECURITY.md) | 安全漏洞的非公开报告方式、建议提供的信息与协调披露说明。 |
-| [本仓库 AI Agent 约定](https://github.com/XAUFE-CA/.github/blob/main/AGENTS.md) | 仅适用于本仓库的 Agent 操作要求、文件修改限制与验证说明。 |
 
 ---
 

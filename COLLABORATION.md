@@ -289,11 +289,12 @@ Closes #42
 1. ![SHOULD][badge-should] 创建 Issue 前应当搜索现有问题，避免重复。
 2. ![SHOULD][badge-should] Bug 报告应当包含复现步骤、预期行为、实际行为和必要的环境信息。
 3. ![SHOULD][badge-should] 功能提案应当说明背景、目标、建议方案及验收条件。
-4. ![SHOULD][badge-should] PR 应当使用项目提供的模板；存在相关 Issue 时，应当建立关联。
+4. ![SHOULD][badge-should] PR 应当使用项目提供的模板；没有项目专用模板时，可参考[组织默认 PR 模板](https://github.com/XAUFE-CA/.github/blob/main/.github/pull_request_template.md)。存在相关 Issue 时，应当建立关联。验证说明围绕本次改动，项目专项检查查阅对应维护文档。
 5. ![SHOULD][badge-should] 大规模功能变更或架构调整应当在开发前与维护者讨论。
 6. ![SHOULD][badge-should] 审查者应当提出具体、可执行的审查意见。
 7. ![SHOULD][badge-should] PR 作者应当认真回应实质性审查意见。
 8. ![SHOULD NOT][badge-should-not] 不应在缺乏必要说明的情况下提交大规模或难以审查的 PR。
+9. ![SHOULD][badge-should] 修改组织默认模板或入口配置时，应当同步贡献指南与相关文档引用；自定义入口的双语名称和说明采用英文在前、中文在后的顺序，不重复添加 GitHub 已提供的安全报告入口。
 
 ### 6.3 可选性要求 ![MAY][badge-may]
 
@@ -301,6 +302,8 @@ Closes #42
 2. ![MAY][badge-may] 开放性的技术讨论可以使用 GitHub Discussions。
 3. ![MAY][badge-may] 贡献者可以通过 Draft PR（草稿拉取请求）提前展示未完成的工作并征求反馈。
 4. ![MAY][badge-may] 项目可以配置 Issue Forms（议题表单）、PR Templates（拉取请求模板）、Labels（标签）等工具改善协作效率。
+
+组织默认的 [Issue Forms](https://github.com/XAUFE-CA/.github/tree/main/.github/ISSUE_TEMPLATE) 与 [Issue 入口配置](https://github.com/XAUFE-CA/.github/blob/main/.github/ISSUE_TEMPLATE/config.yml) 集中维护在本仓库。GitHub 原生入口的文案由平台控制，不属于自定义模板的双语内容。
 
 ---
 

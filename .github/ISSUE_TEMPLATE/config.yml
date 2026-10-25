@@ -1,8 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 安全漏洞报告
-    url: https://github.com/XAUFE-CA/.github/blob/main/SECURITY.md
-    about: 请不要在公开 Issue 中披露漏洞细节，请先阅读安全说明并采用非公开渠道。
-  - name: 贡献与协作指引
+  - name: Contribution and Collaboration Guide / 贡献与协作指引
     url: https://github.com/XAUFE-CA/.github/blob/main/CONTRIBUTING.md
-    about: 在提交 Issue 或 Pull Request 前，请先阅读贡献指南及开发协作规范。
+    about: Read the contribution guide and collaboration rules before opening an Issue or Pull Request. / 提交 Issue 或 Pull Request 前，请阅读贡献指南与协作规范。

@@ -15,7 +15,7 @@ XCA（计算机学社）围绕技术交流、知识分享与项目实践开展�
 
 - **开始使用**：进入具体项目仓库，阅读其 README、使用文档与版本说明。项目是否公开、提供哪些功能及如何使用，以对应仓库的实际内容为准。
 - **反馈问题或建议**：请在对应项目仓库提交 Issue；报告与提案需要准备的信息见 [Issue 与 Pull Request 协作规范](./COLLABORATION.md#6-issue-与-pull-request-协作规范)。
-- **发现社区文档问题**：可以在 [本仓库的 Issues](https://github.com/XAUFE-CA/.github/issues) 中反馈。
+- **发现社区文档问题**：可以在 [本仓库的 Issue 入口](https://github.com/XAUFE-CA/.github/issues/new/choose) 中选择问题报告或功能提案。
 
 > [!WARNING]
 > **安全问题请勿公开披露。** 发现潜在漏洞时，请先阅读对应项目的安全说明，通过其已公布的非公开渠道报告；通用说明见 [安全说明](./SECURITY.md)。
@@ -27,6 +27,8 @@ XCA（计算机学社）围绕技术交流、知识分享与项目实践开展�
 准备提交修改时，请先阅读 [贡献指南](./CONTRIBUTING.md)，并遵循目标项目已公布的要求。
 
 [项目开发与协作规范](./COLLABORATION.md) 集中维护 AI 辅助协作、Git 提交、代码审查与 PR 协作等约定，具体规则及当前版本以该文档为准。
+
+提交 PR 时可参考[组织默认 PR 模板](./.github/pull_request_template.md)。社区活动看板的生成、预览与发布说明见 [Community Pulse 文档](./docs/community-pulse.md)。
 
 ## 许可与复用
 

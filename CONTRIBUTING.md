@@ -7,6 +7,10 @@
 
 不需要先成为组织成员，也不需要原仓库的写入权限。你可以先在自己的仓库副本中修改，再向原项目提出合并请求。修正一处文档、补充一个使用示例，都可以是第一次贡献。
 
+如果只是报告问题或提出建议，不必先 Fork：在目标仓库的 **Issues → New issue** 选择对应模板即可；本仓库提供 [Issue 入口](https://github.com/XAUFE-CA/.github/issues/new/choose)，包含 **Bug Report / 问题报告** 与 **Feature Request / 功能提案**。
+
+安全漏洞不要通过普通 Issue 公开报告。若仓库显示 **Report a security vulnerability**，可从该原生入口查看安全说明；报告渠道以对应项目的安全说明为准，通用约定见 [安全说明](https://github.com/XAUFE-CA/.github/blob/main/SECURITY.md)。
+
 下面以修改 `README.md` 为例，使用 GitHub 网页和 Git 命令行完成一次贡献。
 
 ## 1. 准备账号与工具
@@ -130,10 +134,12 @@ Pull Request（简称 PR）是把你的分支修改合并到原项目的请求�
 | **compare** | 你的工作分支 `docs/improve-readme` |
 
 4. 查看页面下方的提交与文件差异，确认只包含这次准备贡献的修改。如果看不到改动，先检查是否选错了仓库或分支，以及本地提交是否已经推送。
-5. 点击 **Create pull request**，填写标题和页面提供的模板。没有模板时，可以参考 [本仓库的 PR 模板](https://github.com/XAUFE-CA/.github/blob/main/.github/pull_request_template.md)，写明修改原因、改动内容和实际验证结果。
+5. 点击 **Create pull request**，填写标题和页面提供的模板。没有模板时，可以参考 [组织默认 PR 模板](https://github.com/XAUFE-CA/.github/blob/main/.github/pull_request_template.md)，写明改动内容、关联 Issue、实际验证结果、已知风险及适用的 AI 参与披露。
 6. 再次点击 **Create pull request** 提交。还没完成、只是想先征求反馈时，可以在按钮旁的下拉菜单选择 **Create draft pull request**。
 
 成功后会出现一个带编号的 PR 页面。到这一步，你的贡献已经提交给原项目，接下来等待检查和维护者反馈，而不是继续尝试直接推送到原仓库。
+
+验证说明只针对本次改动：列出实际执行的检查，未验证部分如实说明；项目专项验证方法查阅对应维护文档。提交信息遵循 [Commit Message 规范](https://github.com/XAUFE-CA/.github/blob/main/COLLABORATION.md#4-git-commit-message-规范)。
 
 ## 9. 根据反馈更新同一个 PR
 
