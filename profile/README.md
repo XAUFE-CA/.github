@@ -74,7 +74,6 @@ XCA（西安财经大学计算机学社）致力于建设一个**真诚、包容
 
 <div align="center">
 
-<p><strong>真诚 · 包容 · 和谐 · 热爱</strong></p>
 <p><sub>(＾◡＾)ﾉ</sub></p>
 
 </div>
