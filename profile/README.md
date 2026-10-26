@@ -1,9 +1,9 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/xca-banner-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/xca-banner-light.png">
-  <img src="./assets/xca-banner-light.png" alt="XCA 计算机学社横幅：真诚、包容、和谐、热爱；技术交流、知识分享与项目实践。" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/xca-banner-dark.webp">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/xca-banner-light.webp">
+  <img src="./assets/xca-banner-light.webp" alt="XCA 计算机学社横幅：真诚、包容、和谐、热爱；技术交流、知识分享与项目实践。" width="100%">
 </picture>
 
 <h1>XCA · 计算机学社</h1>
